@@ -1,0 +1,10 @@
+<nav class="blog-nav">
+    <a class="blog-nav-item {% if home %}{{ home }}{% endif %}" href="/">Home</a>
+    <a class="blog-nav-item {% if sign %}{{ sign }}{% endif %}"
+       {% if user.is_authenticated %}
+       href="/">{{ user.username|capfirst }}
+       {% else %}
+       href="{% url 'sign_up' %}">Sign up/in {{ request.user.username }}
+       {% endif %}
+    </a>
+</nav>

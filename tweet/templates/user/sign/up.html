@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block nav_ %}
+    {% include 'includes/nav.html' with sign='active' %}
+{% endblock %}
+
+{% block head_ %}
+    <div class="blog-header">
+        <h3 class="blog-title">Sign up</h3>
+    </div>
+{% endblock %}
+
+{% block main_ %}
+    <div class="col-sm-8 blog-main">
+        <h4>
+            Already signed up? then <a href="{% url 'sign_in' %}">sign in here</a>
+        </h4>
+        <div class="blog-post">
+            <form action="{% url 'sign_up_process' %}" method="post">
+                {% csrf_token %}
+                <p>
+                    <label>{{ form.username.label }}</label> <br>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <small style="color:red">{{ error|escape }}</small>
+                        {% endfor %}
+                        <br>
+                    {% endif %}
+                    {{ form.username }} <br>
+                    <small>{{ form.username.help_text }}</small>
+                </p>
+
+                <p>
+                    <label>{{ form.password1.label }}</label> <br>
+                    {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                            <small style="color:red">{{ error|escape }}</small>
+                        {% endfor %}
+                        <br>
+                    {% endif %}
+                    {{ form.password1 }} <br>
+                    <small>{{ form.password1.help_text }}</small>
+                </p>
+
+                <p>
+                    <label>{{ form.password2.label }}</label> <br>
+                    {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                            <small style="color:red">{{ error|escape }}</small>
+                        {% endfor %}
+                        <br>
+                    {% endif %}
+                    {{ form.password2 }} <br>
+                    <small>{{ form.password2.help_text }}</small>
+                </p>
+
+                <button type="submit">Sign up now</button>
+            </form>
+
+        </div><!-- /.blog-post -->
+
+    </div><!-- /.blog-main -->
+{% endblock %}
