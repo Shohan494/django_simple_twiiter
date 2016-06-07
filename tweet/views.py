@@ -39,3 +39,6 @@ def sign_in_process(request):
 def log_out(request):
     logout(request)
     return redirect('/')
+
+def timeline(request):
+    return render(request, 'index.html')

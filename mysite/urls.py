@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from tweet.views import timeline
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('tweet.urls')),
+    url(r'^$', timeline, name='timeline'),
 ]
