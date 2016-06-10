@@ -1,0 +1,19 @@
+{% load custom_tags %}
+<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+    <div class="sidebar-module">
+        {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
+        <p>The time is {{ the_time }}.</p>
+
+        <h4>People you may know</h4>
+        <p>
+            {% if request.user.is_authenticated %}
+                {% people_you_may_know request.user.id as not_followed_people %}
+                {% for p in not_followed_people %}
+                    {{ p.user.username|capfirst }} &nbsp;
+                    <a data-user_id="{{ p.user_id }}" class="follow_btn small">follow now</a>
+                    <small class="small"></small>  <br>
+                {% endfor %}
+            {% endif %}
+        </p>
+    </div>
+</div>

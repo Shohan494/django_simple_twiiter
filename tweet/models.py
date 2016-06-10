@@ -5,6 +5,8 @@ from django.db import models
 # Create your models here.
 
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # application users profile class
 class UserProfile(models.Model):
@@ -23,11 +25,33 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.get_full_name()
 
-    # To make sure that every new user gets his user profile instance created
-    def create_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=user)
-        post_save.connect(create_profile, sender=User)
+    def my_followers(self):
+        return Relation.objects.filter(is_followed=self)
+
+    def people_i_follow(self):
+        return Relation.objects.filter(follower=self)
+
+    def follow(self, person_to_follow):
+        relation, created = Relation.objects.get_or_create(
+            follower=self,
+            is_followed=person_to_follow
+        )
+        return relation
+
+    def unfollow(self, person_to_unfollow):
+        try:
+            Relation.objects.get(
+                follower=self, is_followed=person_to_unfollow
+            ).delete()
+        except Relation.DoesNotExist:
+            pass
+        return
+
+# To make sure that every new user gets his user profile instance created
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
 
 class Relation(models.Model):
     follower = models.ForeignKey(UserProfile, related_name='follows')
