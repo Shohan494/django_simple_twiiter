@@ -10,5 +10,8 @@ urlpatterns = [
     url(r'^sign/in/$', sign_in, name='sign_in'),
     url(r'^sign/in/process/$', sign_in_process, name='sign_in_process'),
 
-    url(r'^sign/out/$', log_out, name='logout')
+    url(r'^sign/out/$', log_out, name='logout'),
+
+    url(r'^follow/new_user/$', follow, name='follow'),
+    url(r'^unfollow/new_user/$', unfollow, name='unfollow')
 ]

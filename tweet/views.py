@@ -5,6 +5,9 @@ from django.contrib.auth import login, logout
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
+from django.contrib.auth.models import User
+
+
 
 def sign_up(request):
     form = UserCreationForm()
@@ -42,3 +45,15 @@ def log_out(request):
 
 def timeline(request):
     return render(request, 'index.html')
+
+def follow(request):
+    user_to_follow = User.objects.get(pk=request.GET.get('id'))
+    active_user = request.user.profile
+    active_user.follow(user_to_follow.profile)
+    return HttpResponse('OK')
+
+def unfollow(request):
+    user_to_unfollow = User.objects.get(pk=request.GET.get('id'))
+    active_user = request.user.profile
+    active_user.unfollow(user_to_unfollow.profile)
+    return HttpResponse('OK')

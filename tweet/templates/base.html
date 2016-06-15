@@ -40,6 +40,24 @@
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+$(function () {
+$('.follow_btn').on('click', function () {
+    $(this).hide();
+    var clicked_user = $(this);
+    var user_id = $(this).data('user_id');
+    $.ajax({
+        url: '{% url "follow" %}',
+        type: 'get',
+        data: {id: user_id}
+    }).done(function (data) {
+        clicked_user.next('small').text('OK').css('color', 'green');
+    }).fail(function (err) {
+        alert(err);
+    });
+});
+});
+</script>
 {% block js_ %}{% endblock %}
 </body>
 </html>

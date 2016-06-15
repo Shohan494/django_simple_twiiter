@@ -9,8 +9,8 @@
             {% if request.user.is_authenticated %}
                 {% people_you_may_know request.user.id as not_followed_people %}
                 {% for p in not_followed_people %}
-                    {{ p.user.username|capfirst }} &nbsp;
-                    <a data-user_id="{{ p.user_id }}" class="follow_btn small">follow now</a>
+
+                    <a data-user_id="{{ p.user_id }}" class="follow_btn small">Follow : {{ p.user.username|capfirst }} &nbsp;</a>
                     <small class="small"></small>  <br>
                 {% endfor %}
             {% endif %}
