@@ -18,7 +18,21 @@
             <p>
                 What are you thinking about?
             </p>
-        </div>
+            <form action="{% url 'tweet' %}" method="post">
+                {% csrf_token %}
+                {{ tweet_form.content }} <br>
+                <input class="btn btn-info" type="submit" value="Tweet">
+            </form>
+        </div><!-- /.blog-post -->
 
-    </div>
+        {% for tw in tweets %}
+        <div class="blog-post">
+            <p>
+                {{ tw.content|safe }} <br>
+                <small class="small">by {{ tw.tweeter.user.username|capfirst }}</small>
+            </p>
+        </div><!-- /.blog-post -->
+        {% endfor %}
+
+    </div><!-- /.blog-main -->
 {% endblock %}

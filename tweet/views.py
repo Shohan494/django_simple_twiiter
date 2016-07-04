@@ -6,6 +6,9 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.contrib.auth.models import User
+from tweetpost.forms import TweetForm
+from tweet.models import UserProfile
+from tweetpost.models import Tweet
 
 
 
@@ -44,7 +47,24 @@ def log_out(request):
     return redirect('/')
 
 def timeline(request):
-    return render(request, 'index.html')
+    if not request.user.is_authenticated():
+        return redirect(reverse('sign_up'))
+
+    tweet_form = TweetForm()
+
+    me = request.user.profile
+    people_i_follow = UserProfile.objects.filter(followers__follower=me)
+
+    tweets_from_people_i_follow = Tweet.objects.filter(
+        tweeter__in=people_i_follow
+    ).order_by('-added')
+
+    my_tweets = me.user_tweets.order_by('-added')
+
+    return render(request, 'index.html', {
+        'tweet_form': tweet_form,
+        'tweets': my_tweets | tweets_from_people_i_follow
+    })
 
 def follow(request):
     user_to_follow = User.objects.get(pk=request.GET.get('id'))

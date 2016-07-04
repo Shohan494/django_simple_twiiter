@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('tweet.urls')),
     url(r'^$', timeline, name='timeline'),
+    url(r'^tweet/', include('tweetpost.urls')), #<-- added
 ]
