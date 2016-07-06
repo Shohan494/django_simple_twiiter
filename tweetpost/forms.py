@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tweet
+from .models import Tweet, Comment
 
 # a custom form for tweet a post
 class TweetForm(forms.ModelForm):
@@ -17,3 +17,10 @@ class TweetForm(forms.ModelForm):
             'rows': '3'
         })
     )
+
+# for commenting
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('author', 'text',)

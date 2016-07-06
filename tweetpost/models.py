@@ -21,6 +21,9 @@ class Tweet(models.Model):
     def __unicode__(self):
         return self.content
 
+    def approved_comments(self):
+        return self.comments.filter(approved_comment=True)
+
 # for hash_# tagged post
 class HashTag(models.Model):
     # tha hash (#) tag

@@ -1,9 +1,10 @@
 # Create your views here.
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.urlresolvers import reverse
-from .models import Tweet
-from .forms import TweetForm
+from .models import Tweet, Comment
+from .forms import TweetForm, CommentForm
 from .helpers import convert_hashtag_to_link
+from django.contrib.auth.decorators import login_required
 
 # tweet is posted from tweet_form
 # validates the data and then saves to db
@@ -45,3 +46,28 @@ def hashtag_search(request):
         'tweets': tweets,
         'tweet_form': TweetForm(),
     })
+
+def add_comment_to_post(request, pk):
+    tweet = get_object_or_404(Tweet, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.tweet = tweet
+            comment.save()
+            return redirect('timeline')
+    else:
+        form = CommentForm()
+    return render(request, 'add_comment_to_post.html', {'form': form})
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('timeline')
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('timeline')
