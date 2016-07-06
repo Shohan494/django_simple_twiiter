@@ -29,10 +29,15 @@
         <div class="blog-post">
             <p>
                 {{ tw.content|safe }} <br>
-                <small class="small">by {{ tw.tweeter.user.username|capfirst }}</small>
+                <small class="small">
+                    Tweeted by
+                    <!-- in the "href" we can pass data like "pk", accessing by the structure the current object is based on-->
+                    <a href="{% url 'profile' pk=tw.tweeter.user.pk %}">{{ tw.tweeter.user.username|capfirst }}</a>
+                </small>
             </p>
         </div><!-- /.blog-post -->
         {% endfor %}
 
     </div><!-- /.blog-main -->
+{% include "includes/sidebar.html" %}
 {% endblock %}

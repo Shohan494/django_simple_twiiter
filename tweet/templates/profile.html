@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block nav_ %}
+    {% include 'includes/nav.html' with home='active' %}
+{% endblock %}
+
+{% block head_ %}
+    <div class="blog-header">
+        <h1 class="blog-title">Simple Twitter</h1>
+    </div>
+{% endblock %}
+
+{% block main_ %}
+    <h2>Personal Details</h2>
+    <p>
+        <!-- accessing data, passed data is "prof".
+        "user_id" is related via "UserProfile"-->
+        <strong>User Id:</strong> {{ prof.user_id }}
+    </p>
+    <p>
+        <!-- accessing data, passed data is "prof".
+        "username" is related via "UserProfile" via
+        thr foreignkey relationship with "auth_user"(User)
+        model-->
+        <strong>User Name:</strong> {{ prof.user.username }}
+    </p>
+    <p>
+        <!--related name doesn't work here, in the place of "user"-->
+        <strong>Joined Date:</strong> {{ prof.user.date_joined }}
+    </p>
+{% endblock %}

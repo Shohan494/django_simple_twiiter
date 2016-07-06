@@ -1,11 +1,13 @@
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse
 from django.core.urlresolvers import reverse
-
 from .models import Tweet
 from .forms import TweetForm
 from .helpers import convert_hashtag_to_link
 
+# tweet is posted from tweet_form
+# validates the data and then saves to db
+# then the hashtag is coverted to link
 def tweet(request):
     submitted_tweet_form = TweetForm(request.POST or None)
 
@@ -21,6 +23,7 @@ def tweet(request):
         'tweets': Tweet.objects.order_by('-added')
     })
 
+# if any user want to search for a hash tag
 def hashtag_search(request):
     hashtag = request.GET.get('h', '')
     tweets = Tweet.objects.filter(content__icontains='#%s' % hashtag)

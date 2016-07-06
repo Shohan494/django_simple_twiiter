@@ -3,6 +3,7 @@
     <a class="blog-nav-item {% if sign %}{{ sign }}{% endif %}"
        {% if user.is_authenticated %}
        href="/">{{ user.username|capfirst }}
+       <a class="blog-nav-item" href={% url "logout" %}>Logout</a>
        {% else %}
        href="{% url 'sign_up' %}">Sign up/in {{ request.user.username }}
        {% endif %}

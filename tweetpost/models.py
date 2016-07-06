@@ -6,6 +6,7 @@ from django.db import models
 
 from tweet.models import UserProfile
 
+# the tweet model defines users post, posted time, likes on post
 class Tweet(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     tweeter = models.ForeignKey(UserProfile, related_name='user_tweets')
@@ -14,7 +15,8 @@ class Tweet(models.Model):
 
     def __unicode__(self):
         return self.content
-
+        
+# for hash_# tagged post
 class HashTag(models.Model):
     tag = models.CharField(max_length=140)
     added = models.DateTimeField(auto_now_add=True)

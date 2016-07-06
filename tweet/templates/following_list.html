@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block nav_ %}
+    {% include 'includes/nav.html' with home='active' %}
+{% endblock %}
+
+{% block head_ %}
+    <div class="blog-header">
+        <h1 class="blog-title">Simple Twitter</h1>
+    </div>
+{% endblock %}
+
+{% block main_ %}
+    <h2>People I am Following</h2>
+    {% for f in people_i_follow %}
+        <!-- remember, in html, you have to use the url "name"-->
+        <h4><a href="{% url 'following_profile' pk=f.pk %}">{{ f }}</a></h4>
+        <br>
+    {% endfor %}
+{% endblock %}

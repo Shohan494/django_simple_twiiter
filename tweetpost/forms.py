@@ -1,6 +1,7 @@
 from django import forms
 from .models import Tweet
 
+# a custom form for tweet a post
 class TweetForm(forms.ModelForm):
     class Meta:
         model = Tweet
