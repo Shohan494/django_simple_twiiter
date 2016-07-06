@@ -49,7 +49,7 @@ class UserProfile(models.Model):
     # returns who is following the user
     def my_followers(self):
         return Relation.objects.filter(is_followed=self)
-
+        
     # returns who the user is following
     def people_i_follow(self):
         return Relation.objects.filter(follower=self)
