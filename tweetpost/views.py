@@ -82,7 +82,7 @@ def add_like(request):
         is_liked = Like.objects.filter(liked_tweet=ans_id, liker=user).exists()
 
     #if ans_id:
-    if is_liked == "False":
+    if not is_liked:
         # creating instance by sending the Like table fields
         instance, created = Like.objects.get_or_create(liker=user, liked_tweet=liked_tweet)
         ans = Tweet.objects.get(id=(int(ans_id)))
@@ -93,6 +93,7 @@ def add_like(request):
     # returns the likes field of a tweet post
     # return JsonResponse({'like_count':likes})
     return HttpResponse(likes)
+    # return render(request, 'index.html', {'likes': likes, 'is_liked': is_liked})
 
 @login_required
 def add_unlike(request):
@@ -100,9 +101,8 @@ def add_unlike(request):
         ans_id = request.GET['id']
         user = request.user.profile
         liked_tweet = get_object_or_404(Tweet, pk=ans_id)
-        is_liked = Like.objects.filter(liked_tweet=ans_id, liker=user).exists()
 
-    if is_liked == "True":
+    if ans_id:
         Like.objects.filter(liker=user,liked_tweet=liked_tweet).delete()
         ans = Tweet.objects.get(id=(int(ans_id)))
         if ans:

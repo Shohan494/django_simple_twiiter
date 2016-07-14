@@ -37,12 +37,20 @@
                     <a href="{% url 'profile' pk=tw.tweeter.user.pk %}">{{ tw.tweeter.user.username|capfirst }}</a>
                 </small>
             </p>
-            <button class="btn btn-default likes-button" type="button"
-            data-ansid="{{ tw.pk }}">Like</button>
-            <i> Total Likes: </i><strong id="{{tw.pk}}" class="like-count">{{ tw.likes }}</strong>
+                {% user_likes_or_not tw.pk request.user.id as is_liked %}
+                    {% if is_liked %}
+                    <button class="btn btn-default likes-button" type="button"
+                    data-ansid="{{ tw.pk }}">Unlike</button>
+                    <i> Total Likes: </i><strong id="{{tw.pk}}" class="like-count">{{ tw.likes }}</strong>
+                    {% endif %}
+                    {% if not is_liked %}
+                    <button class="btn btn-default likes-button" type="button"
+                    data-ansid="{{ tw.pk }}">Like</button>
+                    <i> Total Likes: </i><strong id="{{tw.pk}}" class="like-count">{{ tw.likes }}</strong>
+                    {% endif %}
+            <!-- here a single tweet is being represented by "tw"-->
+            <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=tw.pk %}"> কিছু বলতে চান?</a>
         </div>
-        <!-- here a single tweet is being represented by "tw"-->
-        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=tw.pk %}">কিছু বলতে চান?</a>
         <!-- again, remember the object reference instance "tw" here-->
         {% for comment in tw.comments.all %}
         <div class="comment">

@@ -80,5 +80,5 @@ class Like(models.Model):
         return u'%s liked %s tweet' % (self.liker, self.liked_tweet)
 
     ## you could write a method in your model so that you can say {% for object in data.filtered_set %}
-    ## def user_likes_or_not(self):
-    ##query = Like.objects.filter(liked_tweet_id=ans_id, liker_id=user.pk).exists()
+    ## def is_liked(self):
+    ##    return Like.objects.filter(liked_tweet_id=ans_id, liker_id=user.pk).exists()

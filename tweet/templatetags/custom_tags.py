@@ -19,6 +19,6 @@ def current_time(format_string):
 '''Choices are: followers, follows, id, related_to, relation, user, user_id'''
 
 @register.simple_tag
-def user_likes_or_not(liked_tweet_id, liker_id):
-    query = Like.objects.filter(liked_tweet_id, liker_id).count()
+def user_likes_or_not(liked_tweet, liker):
+    query = Like.objects.filter(liked_tweet=liked_tweet,liker=liker).exists()
     return query
