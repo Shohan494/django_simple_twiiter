@@ -164,3 +164,76 @@ h6, .h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+
+/* like button */
+
+/*-- like button --*/
+/*
+title: Periscope Likes Tutorial
+date: Aug 4, 2013
+author: Zan Ilic
+available at: http://zanilic.com/periscope-likes-tutorial-jquery-css3
+*/
+button.likes {
+  padding: 0;
+}
+
+#heart-icon {
+  color: #f55567;
+  font-size: 22px;
+  border: 1px;
+  opacity: 1;
+  background: none;
+  transition: .3s ease-in-out;
+}
+
+#heart-icon:hover {
+  border: 1px;
+  background: none;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+}
+
+#heart-icon:focus {
+  outline: 0;
+  border: 1px;
+}
+
+#heart-counter {
+  font-weight: 700;
+  font-size: 0.8em;
+  opacity: 1;
+  font-size: 13px;
+  color: #f55567;
+}
+
+
+
+/* Animations */
+
+@keyframes flows {
+  0% {
+    opacity: 0;
+    bottom: 0%;
+    left: 10%;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+    left: 0%;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  80% {
+    bottom: 60%;
+  }
+  100% {
+    opacity: 0;
+    bottom: 80%;
+    left: 0%;
+  }
+}

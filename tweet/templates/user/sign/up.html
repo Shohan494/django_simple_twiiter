@@ -6,14 +6,14 @@
 
 {% block head_ %}
     <div class="blog-header">
-        <h3 class="blog-title">Sign up</h3>
+        <h3 class="blog-title">নিবন্ধন করেন জলদি</h3>
     </div>
 {% endblock %}
 
 {% block main_ %}
     <div class="col-sm-8 blog-main">
         <h4>
-            Already signed up? then <a href="{% url 'sign_in' %}">sign in here</a>
+            আপনে মেম্বার? কইবেন না?<a href="{% url 'sign_in' %}"> আসেন, আসেন</a>
         </h4>
         <div class="blog-post">
             <form action="{% url 'sign_up_process' %}" method="post">
@@ -54,7 +54,7 @@
                     <small>{{ form.password2.help_text }}</small>
                 </p>
 
-                <button type="submit">Sign up now</button>
+                <button type="submit">দেন একটা বারি</button>
             </form>
 
         </div>

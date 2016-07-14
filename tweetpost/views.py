@@ -1,10 +1,11 @@
 # Create your views here.
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.urlresolvers import reverse
-from .models import Tweet, Comment
+from .models import Tweet, Comment, Like
 from .forms import TweetForm, CommentForm
 from .helpers import convert_hashtag_to_link
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 # tweet is posted from tweet_form
 # validates the data and then saves to db
@@ -71,3 +72,43 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('timeline')
+
+@login_required
+def add_like(request):
+    if request.method == 'GET':
+        ans_id = request.GET['id']
+        user = request.user.profile
+        liked_tweet = get_object_or_404(Tweet, pk=ans_id)
+        is_liked = Like.objects.filter(liked_tweet=ans_id, liker=user).exists()
+
+    #if ans_id:
+    if is_liked == "False":
+        # creating instance by sending the Like table fields
+        instance, created = Like.objects.get_or_create(liker=user, liked_tweet=liked_tweet)
+        ans = Tweet.objects.get(id=(int(ans_id)))
+        if ans:
+            likes = ans.likes + 1
+            ans.likes = likes
+            ans.save()
+    # returns the likes field of a tweet post
+    # return JsonResponse({'like_count':likes})
+    return HttpResponse(likes)
+
+@login_required
+def add_unlike(request):
+    if request.method == 'GET':
+        ans_id = request.GET['id']
+        user = request.user.profile
+        liked_tweet = get_object_or_404(Tweet, pk=ans_id)
+        is_liked = Like.objects.filter(liked_tweet=ans_id, liker=user).exists()
+
+    if is_liked == "True":
+        Like.objects.filter(liker=user,liked_tweet=liked_tweet).delete()
+        ans = Tweet.objects.get(id=(int(ans_id)))
+        if ans:
+            likes = ans.likes - 1
+            ans.likes = likes
+            ans.save()
+    # returns the likes field of a tweet post
+    return HttpResponse(likes)
+    # return JsonResponse({'like_count':likes})

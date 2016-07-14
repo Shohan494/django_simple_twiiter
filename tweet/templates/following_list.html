@@ -7,12 +7,12 @@
 
 {% block head_ %}
     <div class="blog-header">
-        <h1 class="blog-title">Simple Twitter</h1>
+        <h1 class="blog-title">গিরিঙ্গিবাজ</h1>
     </div>
 {% endblock %}
 
 {% block main_ %}
-    <h2>People I am Following</h2>
+    <h2>আমার এইডিরে ভাল্লাগে</h2>
     {% for f in people_i_follow %}
         <!-- remember, in html, you have to use the url "name"-->
         <h4><a href="{% url 'following_profile' pk=f.pk %}">{{ f }}</a></h4>

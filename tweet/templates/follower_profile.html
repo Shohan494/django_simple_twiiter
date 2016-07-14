@@ -7,26 +7,26 @@
 
 {% block head_ %}
     <div class="blog-header">
-        <h1 class="blog-title">Simple Twitter</h1>
+        <h1 class="blog-title">গিরিঙ্গিবাজ</h1>
     </div>
 {% endblock %}
 
 {% block main_ %}
-    <h2>Personal Details</h2>
+    <h2>আপনি কে?</h2>
     <p>
         <!-- accessing data, passed data is "prof".
         "user_id" is related via "UserProfile"-->
-        <strong>User Id:</strong> {{ prof.user_id }}
+        <strong>ইউজার আইডি:</strong> {{ prof.user_id }}
     </p>
     <p>
         <!-- accessing data, passed data is "prof".
         "username" is related via "UserProfile" via
         thr foreignkey relationship with "auth_user"(User)
         model-->
-        <strong>User Name:</strong> {{ prof.user.username }}
+        <strong>ইউজার নাম:</strong> {{ prof.user.username }}
     </p>
     <p>
         <!--related name doesn't work here, in the place of "user"-->
-        <strong>Joined Date:</strong> {{ prof.user.date_joined }}
-    </p>    
+        <strong>কবে থেকে আছি:</strong> {{ prof.user.date_joined }}
+    </p>
 {% endblock %}

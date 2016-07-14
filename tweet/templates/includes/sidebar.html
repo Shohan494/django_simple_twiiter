@@ -2,21 +2,23 @@
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module">
         {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
-        <p>The time is {{ the_time }}.</p>
-
-        <h4>People you may know</h4>
+        <p>এখন বাজে {{ the_time }}.</p>
+        <br>
+        <h4>কাউরে চিনেন কি না দেখেন তো?</h4><hr>
         <p>
             {% if request.user.is_authenticated %}
                 {% people_you_may_know request.user.id as not_followed_people %}
                 {% for p in not_followed_people %}
                     <!-- the ajax method will be called here by the "button class name" with "on-click" -->
-                    <a data-user_id="{{ p.user_id }}" class="follow_btn small">Follow : {{ p.user.username|capfirst }} &nbsp;</a>
-                    <small class="small"></small>  <br>
+                    <a data-user_id="{{ p.user_id }}" class="follow_btn">ফলো : {{ p.user.username|capfirst }} &nbsp;</a>
+                    <small class="small"></small> <br>
                 {% endfor %}
             {% endif %}
         </p>
         <br>
-        <h4><a href="{% url 'following_list' %}">List: I am Following</a></h4>
-        <h4><a href="{% url 'follower_list' %}">List: My Followers</a></h4>
+        <h4><a href="{% url 'following_list' %}">কারে কারে আমার ভাল্লাগে?</a></h4>
+        <hr>
+        <h4><a href="{% url 'follower_list' %}">আমারে কেডা সেলিব্রিটি ভাবে?</a></h4>
+        <hr>
     </div>
 </div>

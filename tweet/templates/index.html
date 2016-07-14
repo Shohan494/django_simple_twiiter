@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load custom_tags %}
 
 {% block nav_ %}
     {% include 'includes/nav.html' with home='active' %}
@@ -7,7 +8,8 @@
 
 {% block head_ %}
     <div class="blog-header">
-        <h1 class="blog-title">Simple Twitter</h1>
+        <h1 class="blog-title">গিরিঙ্গিবাজ</h1>
+        <i class="fa fa-heart" aria-hidden="true"></i>
     </div>
 {% endblock %}
 
@@ -16,7 +18,7 @@
 
         <div class="blog-post">
             <p>
-                What are you thinking about?
+                কি এত ভাবেন? বলেন কিছু, আমরাও শুনি।
             </p>
             <form action="{% url 'tweet' %}" method="post">
                 {% csrf_token %}
@@ -28,23 +30,26 @@
         {% for tw in tweets %}
         <div class="blog-post">
             <p>
-                {{ tw.content|safe }} <br>
+                {{ tw.content|safe }}<br><hr>
                 <small class="small">
-                    Tweeted by
+                    লিখসে -
                     <!-- in the "href" we can pass data like "pk", accessing by the structure the current object is based on-->
                     <a href="{% url 'profile' pk=tw.tweeter.user.pk %}">{{ tw.tweeter.user.username|capfirst }}</a>
                 </small>
             </p>
+            <button class="btn btn-default likes-button" type="button"
+            data-ansid="{{ tw.pk }}">Like</button>
+            <i> Total Likes: </i><strong id="{{tw.pk}}" class="like-count">{{ tw.likes }}</strong>
         </div>
         <!-- here a single tweet is being represented by "tw"-->
-        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=tw.pk %}">Add comment</a>
-        <!-- again, remember the object refence instance "tw" here-->
+        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=tw.pk %}">কিছু বলতে চান?</a>
+        <!-- again, remember the object reference instance "tw" here-->
         {% for comment in tw.comments.all %}
+        <div class="comment">
             {% if user.is_authenticated or comment.approved_comment %}
-            <div class="comment">
                 <div class="date">
                     {{ comment.created_date }}
-                    {% if not comment.approved_comment %}
+                    {% if not comment.approved_comment and user.is_superuser %}
                         <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">Remove<span class="glyphicon glyphicon-remove"></span></a>
                         <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Add<span class="glyphicon glyphicon-ok"></span></a>
                     {% endif %}

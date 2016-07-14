@@ -21,6 +21,9 @@ class Tweet(models.Model):
     def __unicode__(self):
         return self.content
 
+    def total_likes(self):
+        return self.likes.count()
+
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
 
@@ -56,7 +59,7 @@ class Comment(models.Model):
     text = models.TextField()
     # comment created date
     created_date = models.DateTimeField(auto_now_add=True)
-    # comment mustr be approved by the ADMIN or optional(registed users)
+    # comment must be approved by the ADMIN or optional(registed users)
     approved_comment = models.BooleanField(default=False)
 
     # the comment approving method
@@ -67,3 +70,15 @@ class Comment(models.Model):
     # string reperesntation of the comment, it will be used when needed
     def __str__(self):
         return self.text
+
+class Like(models.Model):
+    liker = models.ForeignKey(UserProfile, related_name='liked_user')
+    liked_tweet = models.ForeignKey('Tweet', related_name='liked_post')
+    liked_date = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u'%s liked %s tweet' % (self.liker, self.liked_tweet)
+
+    ## you could write a method in your model so that you can say {% for object in data.filtered_set %}
+    ## def user_likes_or_not(self):
+    ##query = Like.objects.filter(liked_tweet_id=ans_id, liker_id=user.pk).exists()
