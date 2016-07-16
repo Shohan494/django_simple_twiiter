@@ -1,7 +1,9 @@
 {% load custom_tags %}
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module">
-        {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
+        {% current_time "%Y-%m-%d" as the_date %}
+        <p>আজ {{ the_date }}.</p>
+        {% current_time "%I:%M %p" as the_time %}
         <p>এখন বাজে {{ the_time }}.</p>
         <br>
         <h4>কাউরে চিনেন কি না দেখেন তো?</h4><hr>

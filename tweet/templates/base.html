@@ -95,23 +95,7 @@ $(".likes-button").click(function(e) {
             alert(err);
         });
     }
-    /*
-    else if ($(this).html() == "Unlike") {
-        $(this).html('like');
-        //alert("js working");
-        // error was there for "data" insted of "attr"
-        var ansid = $(this).attr("data-ansid");
-        $.ajax({
-            url: '{% url "add_unlike" %}',
-            type: 'get',
-            data: {id: ansid}
-        }).success(function (data) {
-            alert("success");
-            $('#'+ansid).html(data);
-        }).fail(function (err) {
-            alert(err);
-        });
-    } */
+
     return false;
 });
 </script>
